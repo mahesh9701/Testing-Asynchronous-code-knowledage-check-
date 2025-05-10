@@ -3,13 +3,16 @@ import './App.css';
 import Counter from './Counter';
 import Wish from './Wish';
 import APIData from './APIData';
+import Matcher from './Matcher';
 
 function App() {
   return (
    <div>
       {/* <Counter/> */}
       {/* <Wish name="Raju"/> */}
-      <APIData/>
+      {/* <APIData/> */}
+      
+      <Matcher/>
    </div>
   );
 }

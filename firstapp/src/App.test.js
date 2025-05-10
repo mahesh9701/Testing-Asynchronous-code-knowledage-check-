@@ -5,29 +5,69 @@
 // Lets test / check whether the App component is really displaying the message "Welcome to React" or not
 // create a new test --> check 
 
-import {getByTestId, render, screen} from "@testing-library/react"
+import {getByTestId, render, screen, within} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 import App from "./App"
-import APIData from "./APIData"
+// import APIData from "./APIData"
+function hasToContain(data1, data2, data3)//data1 = myform, data2 = button, data3 = 2
+{
+   //Logic to check whether 2 buttons are present inside the form or not
 
-describe("APIData component", function()
+   const myData = within(data1).queryAllByRole(data2)//within(myform).queryAllByRole(button)
+
+   // myData = [1st buttonDown, 2nd button]
+
+   if(myData.length === data3)
+   {
+      //It means there are exactly 2 buttons kept inside the form
+      return{
+         pass: true
+      }
+   }
+   else
+   {
+      return{
+         fail: false
+      }
+   }
+
+   }
+
+
+   describe("Matcher component", function()
 {
 
-   test("Check whether li length is minimum one or not", async function()
+  test("Checkning the count of the buttons", function()
    {
-      //Logic
+     render(<App/>)
 
-      render(<App/>)
+   //const myButtons = screen.getAllByRole("button")
+   //expect(myButtons).toHaveLength(2)
 
-      const allListItems = await screen.findAllByRole("listitem")
-      // allListItems = [1st, 2nd, 3rd, 4th]
 
-      expect(allListItems).toHaveLength(20)
-     
+// <form> 
+//    <button>Ok</button>
+//    <button>Continue</button>
+// </form>
+   // const myform = screen.ByRole("form")
+   const myform = screen.getByTestId("myform")
+   expect(myform).hasToContain("button", 2)
+
    })
-
+ 
 })
 
 
+expect.extend({hasToContain})
+
+// matches(functions) in jest (toHaveLength(), toEqual(), toBeInTheDocument(). not.toBeInTheDocument())
+
 // watch Mode
+
+// findAllByRole() --> When we want to find a HTML element that will be displayed on to the screen by taking some time
+// This method returns a promise
+
+// But in out case, button html element will be dispalyed immediately on to the screen, without much delay
+// To identify that button element getAllRole() will be sufficient
+// This method returns no promise
